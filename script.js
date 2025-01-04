@@ -88,10 +88,25 @@ const game = (function (playerOne,playerTwo) {
         }
 
         // Check winner
+        // <--horizontal-->
         if (board[row].every(cell => cell.getValue() === symbol)) {
+            gameBoard.printBoard();
             console.log(`${player} has won the game!`);
             return;
         }
+        // ^Vertical
+        if (board.every(row => row[column].getValue() === symbol)) {
+            gameBoard.printBoard();
+            console.log(`${player} has won the game!`);
+            return;
+        }
+        // corner
+        // IF row === column
+            // IF board[0][0].getValue() === board[1][1].getValue() && board[1][1].getValue() === board[2][2].getValue()
+                //gameBoard.printBoard();
+                //console.log(`${player} has won the game!`);
+                //return;
+
 
         switchPlayer();
         printNewRound();
