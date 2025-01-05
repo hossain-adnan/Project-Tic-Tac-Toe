@@ -101,12 +101,21 @@ const game = (function (playerOne,playerTwo) {
             return;
         }
         // corner
-        // IF row === column
-            // IF board[0][0].getValue() === board[1][1].getValue() && board[1][1].getValue() === board[2][2].getValue()
-                //gameBoard.printBoard();
-                //console.log(`${player} has won the game!`);
-                //return;
+        if (row === column){
+            if (board[0][0].getValue() === board[1][1].getValue() && board[1][1].getValue() === board[2][2].getValue()){
+                gameBoard.printBoard();
+                console.log(`${player} has won the game!`);
+                return;
+            }
+        }
 
+        if (board[0][2].getValue() === symbol
+            && board[1][1].getValue() === symbol
+            && board[2][0].getValue() === symbol) {
+            gameBoard.printBoard();
+            console.log(`${player} has won the game!`);
+            return;
+        }
 
         switchPlayer();
         printNewRound();
