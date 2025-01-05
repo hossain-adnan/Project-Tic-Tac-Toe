@@ -100,7 +100,7 @@ const game = (function (playerOne,playerTwo) {
             console.log(`${player} has won the game!`);
             return;
         }
-        // corner
+        // Diagonal left to right
         if (row === column){
             if (board[0][0].getValue() === board[1][1].getValue() && board[1][1].getValue() === board[2][2].getValue()){
                 gameBoard.printBoard();
@@ -108,7 +108,7 @@ const game = (function (playerOne,playerTwo) {
                 return;
             }
         }
-
+        // Diagonal right to left
         if (board[0][2].getValue() === symbol
             && board[1][1].getValue() === symbol
             && board[2][0].getValue() === symbol) {
