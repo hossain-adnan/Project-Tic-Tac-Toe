@@ -121,6 +121,51 @@ const game = (function (playerOne,playerTwo) {
         printNewRound();
     }
 
-    return {playRound}
+    return {
+        playRound,
+        getActivePlayer,
+    }
     
 })("X-man","O-man");
+
+function screenController() {
+    const turnDiv = document.querySelector('.turn');
+    const boardDiv = document.querySelector('.board');
+
+    const updateScreen = () => {
+        boardDiv.textContent = '';
+
+        const board = gameBoard.getBoard();
+        const activePlayer = game.getActivePlayer();
+
+        turnDiv.textContent = `${activePlayer.name}'s turn...`
+
+        board.forEach((row,rowIndex) => {
+            row.forEach((cell, cellIndex) => {
+                const cellButton = document.createElement('button');
+                cellButton.classList.add('cell');
+                cellButton.dataset.row = rowIndex;
+                cellButton.dataset.column = cellIndex;
+                cellButton.textContent = cell.getValue();
+                boardDiv.appendChild(cellButton);
+            })
+        })
+    }
+
+    function boardClickHandler(e) {
+        const row = e.target.dataset.row;
+        const column = e.target.dataset.column;
+
+        if(!row || !column) return;
+        game.playRound(row, column);
+        updateScreen();
+    }
+
+    boardDiv.addEventListener('click', boardClickHandler);
+
+    updateScreen();
+}
+
+screenController();
+
+
