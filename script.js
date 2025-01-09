@@ -119,6 +119,8 @@ const game = (function (playerOne,playerTwo) {
 
         switchPlayer();
         printNewRound();
+
+        //Check draw
     }
 
     return {
@@ -129,7 +131,7 @@ const game = (function (playerOne,playerTwo) {
 })("X-man","O-man");
 
 function screenController() {
-    const turnDiv = document.querySelector('.turn');
+    const announceDiv = document.querySelector('.announcement');
     const boardDiv = document.querySelector('.board');
 
     const updateScreen = () => {
@@ -138,7 +140,7 @@ function screenController() {
         const board = gameBoard.getBoard();
         const activePlayer = game.getActivePlayer();
 
-        turnDiv.textContent = `${activePlayer.name}'s turn...`
+        announceDiv.textContent = `${activePlayer.name}'s turn...`
 
         board.forEach((row,rowIndex) => {
             row.forEach((cell, cellIndex) => {

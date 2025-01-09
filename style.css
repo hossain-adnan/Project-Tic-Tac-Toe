@@ -1,0 +1,48 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap');
+
+.gaegu-regular {
+    font-family: "Gaegu", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+  
+.gaegu-bold {
+    font-family: "Gaegu", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.announcement {
+    font-family: gaegu;
+    font-weight: bold;
+    font-size: 30px;
+    color: #4d4d4d;
+}
+  
+.board {
+    display: grid;
+    height: 300px;
+    width: 300px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 1px solid #767676;
+    background-color: #e2dfdf;
+    /* gap: 5px; */
+    /* padding: 5px; */
+    border-radius: 3px;
+}
+
+.cell {
+    font-family: gaegu;
+    font-size: 60px;
+    color: #4d4d4d;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
