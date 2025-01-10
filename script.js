@@ -59,18 +59,22 @@ const game = (function (playerOne,playerTwo) {
 
     // function to switch player
     const switchPlayer = () => {
-        activePlayer = activePlayer === players[0] ? players[1] : players[0]
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
     }
 
     const getActivePlayer = () => activePlayer;
 
-    //Print New Round
+    //Winner
+    let winner = null;
+    const getWinner = () => winner;
+
+    //Print New Round on console
     const printNewRound = () => {
         gameBoard.printBoard();
         console.log(`${getActivePlayer().name}'s Turn:`)
     }
 
-    printNewRound();
+    printNewRound(); //console
 
     //Play round
     const playRound = (row, column) => {
@@ -78,6 +82,11 @@ const game = (function (playerOne,playerTwo) {
         const board = gameBoard.getBoard();
         const symbol = getActivePlayer().symbol;
         const player = getActivePlayer().name;
+
+        //IF no winner THEN
+            // Take input
+        //ELSE
+            //
 
         if (board[row][column].getValue() === null) {
             console.log(`${player} has drawn ${symbol}`)
@@ -87,20 +96,44 @@ const game = (function (playerOne,playerTwo) {
             return;
         }
 
+        const checkWin = (board, row, column, symbol) => {
+            if (
+                (board[row].every(cell => cell.getValue() === symbol))
+                || (board.every(row => row[column].getValue() === symbol))
+                || (board[0][0].getValue() === symbol && board[1][1].getValue() === symbol && board[2][2].getValue() === symbol)
+                || (board[0][2].getValue() === symbol && board[1][1].getValue() === symbol && board[2][0].getValue() === symbol)
+            ) return true;
+        }
+
         if(checkWin(board, row, column, symbol)) {
             gameBoard.printBoard(); 
             console.log(`${player} has won the game!`);
+
+            winner = player;
+            // board.every(row => row.every(cell => cell.addSymbol(null)));
+            console.log(`Winner ${winner}`);
+            return;
         }
+
+        //Check Draw
+            //All cell is not null && winner is null
+        if (board.every(row => row.every(cell => cell.getValue() != null))
+        && winner === null) {
+            winner = 'Draw'
+            console.log(`It's a ${winner}!`);
+            return;
+        }
+            
 
         switchPlayer();
         printNewRound();
 
-        //Check draw
     }
 
     return {
         playRound,
         getActivePlayer,
+        getWinner
     }
     
 })("X-man","O-man");
@@ -114,8 +147,17 @@ function screenController() {
 
         const board = gameBoard.getBoard();
         const activePlayer = game.getActivePlayer();
+        let winner = game.getWinner();
 
-        announceDiv.textContent = `${activePlayer.name}'s turn...`
+        if(winner === null) {
+            announceDiv.textContent = `${activePlayer.name}'s turn...`
+        } else if (winner !== 'Draw') {
+            announceDiv.textContent = `${winner} won!`
+            console.log('Screen controller knows there is a winner');
+        } else {
+            announceDiv.textContent = `It's a ${winner}!`
+        }
+
 
         board.forEach((row,rowIndex) => {
             row.forEach((cell, cellIndex) => {
@@ -134,6 +176,9 @@ function screenController() {
         const column = e.target.dataset.column;
 
         if(!row || !column) return;
+
+        // if(winner != null) return;
+
         game.playRound(row, column);
         updateScreen();
     }
@@ -143,14 +188,7 @@ function screenController() {
     updateScreen();
 }
 
-function checkWin(board, row, column, symbol) {
-    if (
-        (board[row].every(cell => cell.getValue() === symbol))
-        || (board.every(row => row[column].getValue() === symbol))
-        || (board[0][0].getValue() === symbol && board[1][1].getValue() === symbol && board[2][2].getValue() === symbol)
-        || (board[0][2].getValue() === symbol && board[1][1].getValue() === symbol && board[2][0].getValue() === symbol)
-    ) return true;
-}
+
 
 screenController();
 
