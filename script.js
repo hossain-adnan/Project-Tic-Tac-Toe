@@ -76,6 +76,13 @@ const game = (function (playerOne,playerTwo) {
 
     printNewRound(); //console
 
+    // Reset function
+    const reset = () => {
+        const board = gameBoard.getBoard();
+        board.forEach(row => row.forEach(cell => cell.addSymbol(null)));
+    }
+
+
     //Play round
     const playRound = (row, column) => {
 
@@ -133,7 +140,8 @@ const game = (function (playerOne,playerTwo) {
     return {
         playRound,
         getActivePlayer,
-        getWinner
+        getWinner,
+        reset
     }
     
 })("X-man","O-man");
@@ -141,6 +149,7 @@ const game = (function (playerOne,playerTwo) {
 function screenController() {
     const announceDiv = document.querySelector('.announcement');
     const boardDiv = document.querySelector('.board');
+    const resetBtn = document.querySelector('.reset');
 
     const updateScreen = () => {
         boardDiv.textContent = '';
@@ -184,6 +193,13 @@ function screenController() {
     }
 
     boardDiv.addEventListener('click', boardClickHandler);
+
+    function resetBtnHandler() {
+        game.reset();
+        updateScreen();
+    }
+
+    resetBtn.addEventListener('click', resetBtnHandler);
 
     updateScreen();
 }
