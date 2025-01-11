@@ -80,6 +80,7 @@ const game = (function (playerOne,playerTwo) {
     const reset = () => {
         const board = gameBoard.getBoard();
         board.forEach(row => row.forEach(cell => cell.addSymbol(null)));
+        winner = null;
     }
 
 
@@ -89,11 +90,6 @@ const game = (function (playerOne,playerTwo) {
         const board = gameBoard.getBoard();
         const symbol = getActivePlayer().symbol;
         const player = getActivePlayer().name;
-
-        //IF no winner THEN
-            // Take input
-        //ELSE
-            //
 
         if (board[row][column].getValue() === null) {
             console.log(`${player} has drawn ${symbol}`)
@@ -157,14 +153,15 @@ function screenController() {
         const board = gameBoard.getBoard();
         const activePlayer = game.getActivePlayer();
         let winner = game.getWinner();
+        console.log(winner);
 
         if(winner === null) {
             announceDiv.textContent = `${activePlayer.name}'s turn...`
-        } else if (winner !== 'Draw') {
-            announceDiv.textContent = `${winner} won!`
-            console.log('Screen controller knows there is a winner');
+        } else if (winner === 'Draw') {
+            announceDiv.textContent = `It's a ${winner}!`;
         } else {
-            announceDiv.textContent = `It's a ${winner}!`
+            announceDiv.textContent = `${winner} won!`;
+            // console.log('Screen controller knows there is a winner');
         }
 
 
